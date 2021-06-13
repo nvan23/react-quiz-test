@@ -1,9 +1,10 @@
 import './notFound.css'
 
 import { Button, Result } from 'antd'
+import { ReactElement } from 'react'
 import React from 'react'
 
-const NotFound = () => {
+export default function NotFound(): ReactElement {
   return (
     <div className='not-found__container'>
       <Result
@@ -19,5 +20,3 @@ const NotFound = () => {
     </div>
   )
 }
-
-export default NotFound
