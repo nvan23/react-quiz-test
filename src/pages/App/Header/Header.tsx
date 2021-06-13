@@ -15,7 +15,7 @@ export default function Header(): ReactElement {
       <Link to='/'>
         <div>
           <img
-            src='assets/image/logo.png'
+            src='../../../assets/image/logo.png'
             style={{ width: 50, height: 50, marginLeft: 16 }}
             alt='Logo'
           />
