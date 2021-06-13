@@ -1,4 +1,5 @@
-import React, { useState, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import {
   UserOutlined,
@@ -11,17 +12,36 @@ import {
   Input,
   Result,
   Checkbox,
-  Typography,
-  Image
+  Image,
+  Tooltip,
+  message,
 } from 'antd'
 
 import './login.css'
 
-export default function Login (): ReactElement {
-  const [loginButtonLoading] = useState(false)
+import { login } from '../../services/user'
 
-  const onFinish = values => {
-    console.log(values)
+interface loginDataInterface {
+  username: string,
+  password: string,
+  remember: boolean,
+}
+
+export default function Login (): ReactElement {
+  const [form] = Form.useForm()
+  let history = useHistory()
+
+  const onFinish = (values: loginDataInterface) => {
+    const { username, password, remember } = values
+    const state = login(username, password, remember)
+
+    if (state) {
+      message.success('Login successfully.')
+      return history.push("/")
+    }
+
+    form.resetFields()
+    message.error('Account and password not match.')
   }
 
   return (
@@ -43,22 +63,26 @@ export default function Login (): ReactElement {
           <Form
             className="login-form"
             initialValues={{ remember: true }}
+            form={form}
             onFinish={onFinish}
           >
             <Form.Item
               name="username"
               rules={[{ required: true, message: 'Please input your Username!' }]}
+              hasFeedback
             >
               <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[{ required: true, message: 'Please input your Password!' }]}
+              hasFeedback
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
+
               />
             </Form.Item>
             <Form.Item>
@@ -66,10 +90,11 @@ export default function Login (): ReactElement {
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
-
-                <a className="login-form-forgot" href="">
-                  Forgot password?
-                </a>
+                <Tooltip title="Coming soon...">
+                  <a className="login-form-forgot" href="#" style={{ pointerEvents: 'auto' }}>
+                    Forgot password?
+                  </a>
+                </Tooltip>
               </div>
             </Form.Item>
 
@@ -84,3 +109,4 @@ export default function Login (): ReactElement {
     </div>
   )
 }
+
