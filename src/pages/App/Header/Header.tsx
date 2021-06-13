@@ -6,7 +6,7 @@ import { ReactElement } from 'react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Header(): ReactElement {
+export default function Header (): ReactElement {
   const [visibleNavDrawer, setVisibleNavDrawer] = useState(false)
   const loggedIn = true
   return (
@@ -14,12 +14,7 @@ export default function Header(): ReactElement {
       {/* Logo */}
       <div>
         <Link to='/'>
-          <Image width={50} src='../../../assets/image/logo.png' />
-          <img
-            src=''
-            style={{ width: 50, height: 50, marginLeft: 16 }}
-            alt='Logo'
-          />
+          <Image width={50} src='logo.png' />
         </Link>
       </div>
 
