@@ -4,13 +4,13 @@ import { Button, Result } from 'antd'
 import { ReactElement } from 'react'
 import React from 'react'
 
-export default function NotFound(): ReactElement {
+export default function NotFound (): ReactElement {
   return (
     <div className='not-found__container'>
       <Result
         status='404'
         title='404'
-        subTitle='Sorry, the page you visited does not exist.'
+        subTitle='Sorry, you have accessed a not-existing route.'
         extra={
           <Button type='primary' href='/'>
             Back Home
