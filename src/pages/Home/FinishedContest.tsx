@@ -3,16 +3,18 @@ import './home.css'
 import React, { ReactElement } from 'react'
 import { Result, Button } from 'antd'
 
-export default function FinishedContest (): ReactElement {
+export default function ChallengeAccepted (): ReactElement {
   return (
     <Result
-      title="Challenge Accepted"
-      subTitle="You have not finished your challenge yet. Get it now to receive your ranking"
-      extra={
-        <Button type="primary" href='/quiz-challenge'>
-          Go to Quiz Challenge
-        </Button>
-      }
+      status="success"
+      title="You have finished your contest"
+      subTitle="You have finished the Quiz challenge. You can view you score or take the challenge again"
+      extra={[
+        <Button type="primary" href='/view-result'>
+          View result
+        </Button>,
+        <Button key="buy">Try Again</Button>,
+      ]}
     />
   )
 }
