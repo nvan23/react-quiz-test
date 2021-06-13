@@ -1,5 +1,5 @@
-const USER = 'user'
-const RESULT = 'result'
+const USER: string = 'user'
+const RESULT: string = 'result'
 
 export {
   getUser,
@@ -15,8 +15,8 @@ function getUser () {
   return JSON.parse(localStorage.getItem(USER))
 }
 
-function setUser (token) {
-  localStorage.setItem(USER, JSON.stringify(token))
+function setUser (user: object) {
+  localStorage.setItem(USER, JSON.stringify(user))
 }
 
 function removeUser () {
@@ -28,7 +28,7 @@ function getResult () {
   return JSON.parse(localStorage.getItem(RESULT))
 }
 
-function setResult (token) {
+function setResult (token: string) {
   localStorage.setItem(RESULT, JSON.stringify(token))
 }
 
