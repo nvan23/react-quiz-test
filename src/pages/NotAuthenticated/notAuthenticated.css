@@ -1,0 +1,5 @@
+.not-authenticated__container {
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
