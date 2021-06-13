@@ -1,33 +1,65 @@
-import './header.css'
+import { ReactElement } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
 import { DownOutlined } from '@ant-design/icons'
-import { Button, Image, Menu } from 'antd'
-import { ReactElement } from 'react'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Button, Image, Menu, Avatar } from 'antd'
+
+import './header.css'
+
+import { isLoggedIn, loadUser, logout } from '../../../services/user'
+
+interface userInterface {
+  username?: string,
+  password?: string,
+}
 
 export default function Header (): ReactElement {
-  const [visibleNavDrawer, setVisibleNavDrawer] = useState(false)
-  const loggedIn: boolean = true
+  const [, setVisibleNavDrawer] = useState<boolean>(false)
+  const [user, setUser] = useState<userInterface>(null)
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+
+  const { SubMenu } = Menu
+  let history = useHistory()
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      return setLoggedIn(isLoggedIn())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (loadUser()) {
+      setUser(loadUser())
+    }
+  }, [])
+
+  function handleLogout () {
+    logout()
+    setUser(null)
+    setLoggedIn(false)
+    return history.push("/")
+  }
+
   return (
     <div className='nav__container'>
       {/* Logo */}
-      <div className='nav__logo'>
-        <Link to='/'>
+      <Link to='/'>
+        <div className='nav__logo'>
           <Image
             style={{
-              paddingTop: '6px',
+              paddingTop: '6px 0',
               margin: '0 20px',
             }}
             width={36}
             src='logo.png'
             preview={false}
           />
-        </Link>
-        <span>
-          Quiz App
-        </span>
-      </div>
+          <span className="nav__app-name">
+            Quiz App
+          </span>
+        </div>
+      </Link>
 
       {/* Navbar */}
       <div className='menu__container'>
@@ -51,28 +83,41 @@ export default function Header (): ReactElement {
             <Link to='/view-result'>View result</Link>
           </Menu.Item>
 
-          {loggedIn ? (
+          {!loggedIn ? (
             <Menu.Item key='login'>
               <Button
                 size='small'
                 href='/login'
                 type='primary'
                 style={{ color: 'white' }}
-                onClick={() => console.log('login handle')}
               >
                 Login
               </Button>
             </Menu.Item>
           ) : (
-            <Menu.Item key='logout'>
-              <Button
-                size='small'
-                type='primary'
-                onClick={() => console.log('logout handle')}
+            <SubMenu
+              key="username"
+              icon={<Avatar src='default_avatar.jpg' />}
+              title={`${user?.username}`}
+            >
+              <Menu.Item
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
               >
-                Username
-              </Button>
-            </Menu.Item>
+                <Button
+                  key='logout'
+                  size='small'
+                  type='primary'
+                  danger
+                  onClick={() => handleLogout()}
+                >
+                  Logout
+                </Button>
+              </Menu.Item>
+            </SubMenu>
           )}
         </Menu>
       </div>

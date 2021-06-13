@@ -10,7 +10,8 @@
   align-items: center;
 }
 
-.nav__logo span {
+.nav__app-name {
+  color: black;
   margin-left: 30px;
   font-weight: 600;
   cursor: pointer;
