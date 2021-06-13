@@ -1,17 +1,8 @@
-.logo {
-  display: block;
-  z-index: 1;
-  width: 120px;
-  height: 31px;
-  margin: 16px 24px 16px 0;
-  background: rgba(255, 0, 0, 0.3);
-}
-
 .nav__container {
   display: flex;
   align-items: center;
-  height: 31px;
-  margin: 16px 0;
+  justify-content: space-between;
+  margin: 0;
 }
 
 .menu__container {

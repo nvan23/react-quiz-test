@@ -1,7 +1,7 @@
 import './header.css'
 
 import { DownOutlined } from '@ant-design/icons'
-import { Button, Menu } from 'antd'
+import { Button, Image, Menu } from 'antd'
 import { ReactElement } from 'react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -12,15 +12,16 @@ export default function Header(): ReactElement {
   return (
     <div className='nav__container'>
       {/* Logo */}
-      <Link to='/'>
-        <div>
+      <div>
+        <Link to='/'>
+          <Image width={50} src='../../../assets/image/logo.png' />
           <img
-            src='../../../assets/image/logo.png'
+            src=''
             style={{ width: 50, height: 50, marginLeft: 16 }}
             alt='Logo'
           />
-        </div>
-      </Link>
+        </Link>
+      </div>
 
       {/* Navbar */}
       <div className='menu__container'>
@@ -30,7 +31,7 @@ export default function Header(): ReactElement {
           overflowedIndicator={
             <DownOutlined onClick={() => setVisibleNavDrawer(true)} />
           }
-          style={{ border: 0 }}
+          style={{ border: 'none' }}
         >
           <Menu.Item key='home'>
             <Link to='/'>Home</Link>
@@ -46,7 +47,14 @@ export default function Header(): ReactElement {
 
           {loggedIn ? (
             <Menu.Item key='login'>
-              <Link to='/login'>Login</Link>
+              <Button
+                size='small'
+                href='/login'
+                type='primary'
+                onClick={() => console.log('login handle')}
+              >
+                Login
+              </Button>
             </Menu.Item>
           ) : (
             <Menu.Item key='logout'>
