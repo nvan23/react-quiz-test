@@ -1,17 +1,43 @@
-.Login__container {
+.login__container {
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: auto;
+    flex-direction: column;
+    flex: 1 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background: #f0f2f5;
+}
+
+.logo_container {
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.Login__logo {
-  width: 150px;
-  height: 150px;
-  margin-top: 50px;
+.logo_container span {
+  font-family: 'Roboto Condensed', 'Segoe UI', 'Roboto', sans-serif;
+  margin: 20px 0 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+} 
+
+
+.login-form {
+  max-width: 400px;
+  min-width: 300px;
 }
 
-.form-item--margin-bottom-small {
-  margin-bottom: 8px;
+.login-form .ant-form-item {
+  margin: 10px;
+}
+
+.login-form .ant-form-item .ant-input-prefix {
+  color: #1890ff;
+}
+
+.remember__container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
 }
