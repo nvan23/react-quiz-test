@@ -5,7 +5,7 @@ import {
   EyeTwoTone,
   UserOutlined,
 } from '@ant-design/icons'
-import { Button, Col, Form, Input, Result, Row, Typography } from 'antd'
+import { Button, Col, Form, Input, Result, Row, Typography, Image } from 'antd'
 import React, { useState } from 'react'
 const Login = ({ history }) => {
   const [loginButtonLoading] = useState(false)
