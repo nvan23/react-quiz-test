@@ -8,14 +8,25 @@ import { Link } from 'react-router-dom'
 
 export default function Header (): ReactElement {
   const [visibleNavDrawer, setVisibleNavDrawer] = useState(false)
-  const loggedIn = true
+  const loggedIn: boolean = true
   return (
     <div className='nav__container'>
       {/* Logo */}
-      <div>
+      <div className='nav__logo'>
         <Link to='/'>
-          <Image width={50} src='logo.png' />
+          <Image
+            style={{
+              paddingTop: '6px',
+              margin: '0 20px',
+            }}
+            width={36}
+            src='logo.png'
+            preview={false}
+          />
         </Link>
+        <span>
+          Quiz App
+        </span>
       </div>
 
       {/* Navbar */}
@@ -46,6 +57,7 @@ export default function Header (): ReactElement {
                 size='small'
                 href='/login'
                 type='primary'
+                style={{ color: 'white' }}
                 onClick={() => console.log('login handle')}
               >
                 Login
@@ -58,7 +70,7 @@ export default function Header (): ReactElement {
                 type='primary'
                 onClick={() => console.log('logout handle')}
               >
-                Logout
+                Username
               </Button>
             </Menu.Item>
           )}

@@ -2,8 +2,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0;
 }
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav__logo span {
+  margin-left: 30px;
+  font-weight: 600;
+  cursor: pointer;
+} 
 
 .menu__container {
   flex: 1;
