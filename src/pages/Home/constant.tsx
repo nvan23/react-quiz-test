@@ -1,9 +1,0 @@
-const GET_USER = 'GET_USER'
-const SET_USER = 'SET_USER'
-const RESET_USER = 'RESET_USER'
-
-export {
-  GET_USER,
-  SET_USER,
-  RESET_USER
-}

@@ -30,15 +30,13 @@ function login (username: string, password: string, remember: boolean) {
         password
       }
       setUser(user)
-      return true
     }
+    return true
   }
   return false
 }
 
 function logout () {
-  if (!getUser()) return false
-
   removeUser()
   return true
 }

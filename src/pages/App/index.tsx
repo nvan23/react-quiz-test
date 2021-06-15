@@ -1,18 +1,20 @@
-import './base.css'
-import './pages.css'
-
 import { ReactElement } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 
 import Content from './Content'
 import Footer from './Footer'
 import Header from './Header'
 
-export default function AppContainer(): ReactElement {
+import './base.css'
+import './pages.css'
+
+import { history } from '../../helpers/history'
+
+export default function AppContainer (): ReactElement {
   return (
     <div className='grid'>
       <div className='page__container'>
-        <Router>
+        <Router history={history}>
           <Header />
           <Content />
           <Footer />

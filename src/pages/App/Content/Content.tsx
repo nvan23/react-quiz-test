@@ -13,11 +13,14 @@ import ViewResult from '../../ViewResult'
 import { isLoggedIn } from '../../../services/user'
 
 export default function Content (): ReactElement {
+
   return (
     <div className='content__container'>
       <Switch>
         <Route exact path='/login'>
-          {isLoggedIn() ? <Redirect to="/" /> : <LoginPage />}
+          {isLoggedIn()
+            ? <Redirect to="/" />
+            : <LoginPage />}
         </Route>
         <Route exact path='/quiz-challenge' component={QuizChallenge} />
         <Route exact path='/view-result' component={ViewResult} />

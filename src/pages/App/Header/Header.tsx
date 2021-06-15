@@ -1,44 +1,25 @@
 import { ReactElement } from 'react'
-import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Button, Image, Menu, Avatar } from 'antd'
 
 import './header.css'
 
 import { isLoggedIn, loadUser, logout } from '../../../services/user'
 
-interface userInterface {
-  username?: string,
-  password?: string,
-}
 
 export default function Header (): ReactElement {
   const [, setVisibleNavDrawer] = useState<boolean>(false)
-  const [user, setUser] = useState<userInterface>(null)
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
   const { SubMenu } = Menu
-  let history = useHistory()
-
-  useEffect(() => {
-    if (isLoggedIn()) {
-      return setLoggedIn(isLoggedIn())
-    }
-  }, [])
-
-  useEffect(() => {
-    if (loadUser()) {
-      setUser(loadUser())
-    }
-  }, [])
 
   function handleLogout () {
-    logout()
-    setUser(null)
-    setLoggedIn(false)
-    return history.push("/")
+    const state: boolean = logout()
+    if (state) {
+      window.location.reload()
+    }
   }
 
   return (
@@ -83,7 +64,7 @@ export default function Header (): ReactElement {
             <Link to='/view-result'>View result</Link>
           </Menu.Item>
 
-          {!loggedIn ? (
+          {!isLoggedIn() ? (
             <Menu.Item key='login'>
               <Button
                 size='small'
@@ -97,8 +78,8 @@ export default function Header (): ReactElement {
           ) : (
             <SubMenu
               key="username"
-              icon={<Avatar src='default_avatar.jpg' />}
-              title={`${user?.username}`}
+              icon={<Avatar src='default_avatar.jpg' style={{ marginBottom: '5px' }} />}
+              title={`${loadUser()?.username}`}
             >
               <Menu.Item
                 style={{
@@ -110,10 +91,10 @@ export default function Header (): ReactElement {
                 <Button
                   key='logout'
                   size='small'
-                  type='primary'
-                  danger
+                  type='link'
                   onClick={() => handleLogout()}
                 >
+                  <LogoutOutlined />
                   Logout
                 </Button>
               </Menu.Item>

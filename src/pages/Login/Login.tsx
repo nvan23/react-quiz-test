@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import { useHistory } from 'react-router-dom'
 
 import {
   UserOutlined,
@@ -29,19 +28,18 @@ interface loginDataInterface {
 
 export default function Login (): ReactElement {
   const [form] = Form.useForm()
-  let history = useHistory()
 
   const onFinish = (values: loginDataInterface) => {
     const { username, password, remember } = values
-    const state = login(username, password, remember)
+    const state: boolean = login(username, password, remember)
 
-    if (state) {
-      message.success('Login successfully.')
-      return history.push("/")
+    if (!state) {
+      form.resetFields()
+      message.error('Account and password not match.')
+      return
     }
 
-    form.resetFields()
-    message.error('Account and password not match.')
+    window.location.reload()
   }
 
   return (
