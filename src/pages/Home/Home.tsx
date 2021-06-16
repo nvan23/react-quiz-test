@@ -11,7 +11,7 @@ import {
 import './home.css'
 
 import { isLoggedIn, loadUser } from '../../services/user'
-import { isTakenContest } from '../../services/challenge'
+import { isTakenContest } from '../../services/quiz'
 
 interface userInterface {
   username?: string,
@@ -21,20 +21,13 @@ interface userInterface {
 export default function Home (): ReactElement {
   const [user, setUser] = useState<userInterface | null>(null)
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
-  const [takenContest, setTakenContest] = useState<boolean>(false)
 
   useEffect(() => {
     if (isLoggedIn()) {
       setLoggedIn(isLoggedIn())
       setUser(loadUser())
     }
-  }, [isLoggedIn()])
-
-  useEffect(() => {
-    if (isTakenContest()) {
-      setTakenContest(isTakenContest())
-    }
-  }, [isTakenContest()])
+  }, [])
 
   useEffect(() => {
     user?.username && message.success(`Welcome back ${user?.username}`)
@@ -44,7 +37,7 @@ export default function Home (): ReactElement {
     <div className='home__container'>{
       loggedIn
         ? (
-          takenContest
+          !isTakenContest()
             ? <FinishedContest />
             : <ChallengeAccepted />
         )

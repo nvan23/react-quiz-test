@@ -13,7 +13,7 @@ export default function ChallengeAccepted (): ReactElement {
         <Button type="primary" href='/view-result'>
           View result
         </Button>,
-        <Button key="buy">Try Again</Button>,
+        <Button key="buy" href='/quiz-challenge'>Try Again</Button>,
       ]}
     />
   )
