@@ -1,5 +1,6 @@
 .quiz-challenge__container {
   display: flex;
-  margin: auto;
-  align-items: center;
+  width: 100%;
+  height: auto;
+  margin: 20px 20px 0 40px;
 }
