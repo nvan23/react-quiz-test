@@ -1,10 +1,14 @@
 const USER: string = 'user'
 const RESULT: string = 'result'
+const ANSWER: string = 'answer'
 
 export {
   getUser,
   setUser,
   removeUser,
+  getAnswer,
+  setAnswer,
+  removeAnswer,
   getResult,
   setResult,
   removeResult,
@@ -23,13 +27,26 @@ function removeUser () {
   localStorage.removeItem(USER)
 }
 
+// contest answer
+function getAnswer () {
+  return JSON.parse(localStorage.getItem(ANSWER))
+}
+
+function setAnswer (answer: Array<object>) {
+  localStorage.setItem(ANSWER, JSON.stringify(answer))
+}
+
+function removeAnswer () {
+  localStorage.removeItem(ANSWER)
+}
+
 // contest result
 function getResult () {
   return JSON.parse(localStorage.getItem(RESULT))
 }
 
-function setResult (token: string) {
-  localStorage.setItem(RESULT, JSON.stringify(token))
+function setResult (result: object) {
+  localStorage.setItem(RESULT, JSON.stringify(result))
 }
 
 function removeResult () {
