@@ -8,34 +8,55 @@ import {
   Radio,
   Empty,
   Spin,
+  Button,
+  Popconfirm,
 } from 'antd'
 
 import Box from '../../components/Box'
 
 import './quiz-challenge.css'
 
-import { getQuiz } from '../../requester/quiz'
+import { getQuiz, submitAnswer } from '../../requester/quiz'
+import { storeAnswer, storeResult } from '../../services/quiz'
+
+interface IAnswer {
+  id: number,
+  choice: string,
+}
 
 export default function QuizChallenge (): ReactElement {
 
   const [visible, setVisible] = useState<boolean>(true)
-  const [selectedOption, setSelectedOption] = useState<number>(1)
+  const [, setSelectedOption] = useState<number>(1)
   const [questionIndex, setQuestionIndex] = useState<string>('1')
   const [quiz, setQuiz] = useState<Array<object>>([])
+  const [answers, setAnswers] = useState<Array<object>>([])
   const [loading, setLoading] = useState<boolean>(true)
+
+  const [visibleSubmitConfirm, setVisibleSubmitConfirm] = useState<boolean>(false)
+  const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
+  const [disabledOptions, setDisabledOptions] = useState<boolean>(false)
 
   useEffect(() => {
     getQuiz()
       .then(res => {
         if (res.status) {
           setLoading(false)
+
+          const answers: Array<IAnswer> = res.data.result.map((a, i) => {
+            const answer: IAnswer = {
+              id: i + 1,
+              choice: ''
+            }
+            return answer
+          })
+          setAnswers(answers)
+
           return setQuiz(res.data.result)
         }
       })
       .catch(err => console.log(err))
   }, [])
-
-  console.log(quiz)
 
   const { Text } = Typography
   const { TabPane } = Tabs
@@ -49,9 +70,32 @@ export default function QuizChallenge (): ReactElement {
   }
 
   function onChange (e) {
-    console.log('radio checked', e.target.value)
+    const answersContainer: Array<IAnswer> = [...answers]
+    answersContainer[parseInt(questionIndex) - 1].choice = e.target.value
+
+    setAnswers(answersContainer)
     setSelectedOption(e.target.value)
-  };
+  }
+
+  function handleOk () {
+    setConfirmLoading(true)
+
+    submitAnswer(answers)
+      .then(res => {
+        if (res.status) {
+          setConfirmLoading(false)
+          setVisibleSubmitConfirm(false)
+          setDisabledOptions(true)
+          storeAnswer(quiz, answers)
+          storeResult(res.data)
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
+  function handleCancel () {
+    setVisibleSubmitConfirm(false)
+  }
 
   return (
     <div className='quiz-challenge__container'>
@@ -72,7 +116,30 @@ export default function QuizChallenge (): ReactElement {
                 quiz?.length
                   ? (
                     <Space direction="vertical" style={{ width: '100%' }}>
-                      <Text key={questionIndex} strong>Question list for React challenger: {questionIndex}/{quiz?.length}</Text>
+
+                      <div style={{
+                        display: 'flex',
+                        margin: 'auto',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                        <Text key={questionIndex} strong>
+                          Question list for React challenger: {questionIndex}/{quiz?.length}
+                        </Text>
+
+                        <Popconfirm
+                          title="Are you sure to submit your answer?"
+                          visible={visibleSubmitConfirm}
+                          onConfirm={handleOk}
+                          okButtonProps={{ loading: confirmLoading }}
+                          onCancel={handleCancel}
+                          cancelText='Cancel'
+                        >
+                          <Button key='submit-btn' type='link' onClick={() => setVisibleSubmitConfirm(true)}>
+                            Submit result
+                          </Button>
+                        </Popconfirm>
+                      </div>
 
                       {
                         visible && (
@@ -100,13 +167,13 @@ export default function QuizChallenge (): ReactElement {
 
                                   <Radio.Group
                                     onChange={onChange}
-                                    value={null}
+                                    disabled={disabledOptions}
                                   >
                                     <Space direction="vertical">
                                       {
                                         Object.entries(q?.choices).map(
                                           option => {
-                                            return <Radio key={option[0]} value={option[0]}>{option[1]}</Radio>
+                                            return <Radio key={option[0]} value={option[0]}>{option[0]}. {option[1]}</Radio>
                                           }
                                         )
                                       }
