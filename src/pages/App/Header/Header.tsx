@@ -12,7 +12,6 @@ import { isLoggedIn, loadUser, logout } from '../../../services/user'
 
 export default function Header (): ReactElement {
   const [, setVisibleNavDrawer] = useState<boolean>(false)
-
   const { SubMenu } = Menu
 
   function handleLogout () {
@@ -82,6 +81,7 @@ export default function Header (): ReactElement {
               title={`${loadUser()?.username}`}
             >
               <Menu.Item
+                key="username-logout"
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
