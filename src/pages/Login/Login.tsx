@@ -89,7 +89,7 @@ export default function Login (): ReactElement {
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
                 <Tooltip title="Coming soon...">
-                  <a className="login-form-forgot" href="#" style={{ pointerEvents: 'auto' }}>
+                  <a className="login-form-forgot" href="/reset-password" style={{ pointerEvents: 'auto' }}>
                     Forgot password?
                   </a>
                 </Tooltip>
