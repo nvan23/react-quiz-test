@@ -6,7 +6,7 @@ import { config } from '../config'
 
 export {
   getQuiz,
-  compareAnswer,
+  submitAnswer,
 }
 
 /**
@@ -24,7 +24,7 @@ function getQuiz () {
  * @param {array} answer
  */
 
-function compareAnswer (answer: Array<object>) {
+function submitAnswer (answer: Array<object>) {
   return axios.post(
     `${config.API_URL}/quiz/answer`,
     {
