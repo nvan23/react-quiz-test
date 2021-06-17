@@ -162,10 +162,6 @@ export default function ViewResult (): ReactElement {
                               <Text key={questionAnswerIndex} strong>
                                 Question list for React challenger: {questionIndex}/{answer?.length}
                               </Text>
-
-                              <Button key='submit-btn' type='link' href='/quiz-challenge'>
-                                Try again
-                              </Button>
                             </div>
 
                             <Tabs defaultActiveKey="1" onChange={callbackAnswer}>
