@@ -36,6 +36,7 @@ export default function QuizChallenge (): ReactElement {
   const [visibleSubmitConfirm, setVisibleSubmitConfirm] = useState<boolean>(false)
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
   const [disabledOptions, setDisabledOptions] = useState<boolean>(false)
+  const [viewResult, setViewResult] = useState<boolean>(false)
 
   useEffect(() => {
     getQuiz()
@@ -88,6 +89,7 @@ export default function QuizChallenge (): ReactElement {
           setDisabledOptions(true)
           storeAnswer(quiz, answers)
           storeResult(res.data)
+          setViewResult(true)
         }
       })
       .catch(err => console.log(err))
@@ -127,18 +129,28 @@ export default function QuizChallenge (): ReactElement {
                           Question list for React challenger: {questionIndex}/{quiz?.length}
                         </Text>
 
-                        <Popconfirm
-                          title="Are you sure to submit your answer?"
-                          visible={visibleSubmitConfirm}
-                          onConfirm={handleOk}
-                          okButtonProps={{ loading: confirmLoading }}
-                          onCancel={handleCancel}
-                          cancelText='Cancel'
-                        >
-                          <Button key='submit-btn' type='link' onClick={() => setVisibleSubmitConfirm(true)}>
-                            Submit result
-                          </Button>
-                        </Popconfirm>
+                        {
+                          viewResult
+                            ? (
+                              <Button key='view-result-btn' type='link' href='/view-result'>
+                                View result now
+                              </Button>
+                            )
+                            : (
+                              <Popconfirm
+                                title="Are you sure to submit your answer?"
+                                visible={visibleSubmitConfirm}
+                                onConfirm={handleOk}
+                                okButtonProps={{ loading: confirmLoading }}
+                                onCancel={handleCancel}
+                                cancelText='Cancel'
+                              >
+                                <Button key='submit-btn' type='link' onClick={() => setVisibleSubmitConfirm(true)}>
+                                  Submit result
+                                </Button>
+                              </Popconfirm>
+                            )
+                        }
                       </div>
 
                       {
