@@ -34,18 +34,17 @@ export default function ViewResult (): ReactElement {
     if (!loadResult()?.incorrectAnswers?.length) {
       setAnswer(loadAnswer())
     } else {
+      let answerFeeder: Array<object> = loadAnswer()
       const answerContainer: Array<object> = loadAnswer()
       const resultContainer: Array<object> = loadResult()?.incorrectAnswers
+
       answerContainer.forEach(
-        (a, i) => {
-          resultContainer.forEach(r => {
-            if (r?.id.toString() === a?.id.toString()) {
-              answerContainer.splice(i, 1)
-            }
-          })
-        }
+        (a, i) => resultContainer.forEach(r =>
+          r?.id === a?.id && answerFeeder.splice(i, 1)
+        )
       )
-      setAnswer(answerContainer)
+
+      setAnswer(answerFeeder)
     }
 
     setLoading(false)
@@ -160,7 +159,7 @@ export default function ViewResult (): ReactElement {
                               justifyContent: 'space-between',
                             }}>
                               <Text key={questionAnswerIndex} strong>
-                                Question list for React challenger: {questionIndex}/{answer?.length}
+                                Question list for React challenger: {questionAnswerIndex}/{answer?.length}
                               </Text>
                             </div>
 
