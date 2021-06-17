@@ -10,10 +10,10 @@ export default function ChallengeAccepted (): ReactElement {
       title="You have finished your contest"
       subTitle="You have finished the Quiz challenge. You can view you score or take the challenge again"
       extra={[
-        <Button type="primary" href='/view-result'>
+        <Button key="view-result-btn" type="primary" href='/view-result'>
           View result
         </Button>,
-        <Button key="buy" href='/quiz-challenge'>Try Again</Button>,
+        <Button key="try-again-btn" href='/quiz-challenge'>Try Again</Button>,
       ]}
     />
   )
